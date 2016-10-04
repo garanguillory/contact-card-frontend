@@ -1,0 +1,21 @@
+ul {
+	padding-left: 0px;
+	text-decoration: none;
+}
+
+.error {
+	color: red;
+}
+
+.contact-card-button-group {
+	float: right;
+	
+	li {
+		display: inline-block;
+		margin-right: 0.5em;
+
+		&:last-child{
+			margin-right: 0em;
+		}
+	}
+}
