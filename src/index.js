@@ -35,7 +35,7 @@ ReactDOM.render(
         <Route path="login" component={Login} />
         <Route path="logout" component={Logout} />
         <Route path="signup" component={Signup} />
-        <Route path="contactcard" component={RequireAuth(ContactCard)} />
+        <Route path="contactcard/:id" component={RequireAuth(ContactCard)} />
       </Route>
     </Router>
   </Provider>

@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, USER_INFO, UPDATE_USER, DELETE_USER } from './types';
 
 const ROOT_URL = 'http://localhost:3000';
+// const ROOT_URL = 'http://contact-card-api-garan.herokuapp.com';
 
 
 export function loginUser({ email, password }) {
@@ -10,12 +11,12 @@ export function loginUser({ email, password }) {
 
     axios.post(`${ROOT_URL}/login`, { email, password })
       .then(response => {
-        console.log("response: ", response);
+        console.log("login response: ", response);
         dispatch({ type: AUTH_USER});
-        dispatch({ type: USER_INFO, payload: response.data });
+        // dispatch({ type: USER_INFO, payload: response.data });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('email', response.data.email);
-          browserHistory.push('/contactcard');
+          browserHistory.push(`/contactcard/${response.data.id}`);
       })
       .catch(() => {
         dispatch(authError('Wrong Login Info'));
@@ -38,13 +39,13 @@ export function signupUser({ email, password }) {
 }
 
 
-export function updateUser({id, email, first_name, last_name, photo_url}) {
+export function updateUser(id, {email, first_name, last_name, photo_url}) {
   return function(dispatch) {
-    axios.put(`${ROOT_URL}/contactcard`, {id, email, first_name, last_name, photo_url})
+    axios.put(`${ROOT_URL}/contactcard/${id}`, {email, first_name, last_name, photo_url})
       .then(response => {
-        dispatch({ type: UPDATE_USER, payload: response.data });
-        localStorage.setItem('token', response.data.token);
-        browserHistory.push('/contactcard');
+        dispatch({ type: UPDATE_USER, payload: response.data.userInfo });
+        // localStorage.setItem('token', response.data.token);
+        browserHistory.push(`/contactcard/${id}`);
       })
       .catch(response => dispatch(authError(response.data.error)));
   }
@@ -64,18 +65,24 @@ export function deleteUser({email}) {
   }
 }
 
-// export function getUserInfo() {
-//   return function(dispatch) {
-//     axios.get(`${ROOT_URL}/contactcard`, {id, email, first_name, last_name, photo_url})
-//       .then(response => {
-//         console.log('response: ', response);
-//         dispatch({ type: UPDATE_USER, payload: response.data });
-//         localStorage.setItem('token', response.data.token);
-//         browserHistory.push('/contactcard');
-//       })
-//       .catch(response => dispatch(authError(response.data.error)));
-//   }
-// }
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+// {headers: {authorization: localStorage.getItem('token')}}
+
+export function getUserInfo(id) {
+  return function(dispatch) {
+    axios.get(`${ROOT_URL}/contactcard/${id}`, {headers: {authorization: localStorage.getItem('token')}})
+      .then(response => {
+        console.log('getUserInfo response: ', response);
+        dispatch({ type: USER_INFO, payload: response.data.userInfo });
+        // localStorage.setItem('token', response.data.token);
+        browserHistory.push(`/contactcard/${id}`);
+      })
+      .catch(response => dispatch(authError(response.data.error)));
+  }
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 export function authError(error) {
   return {

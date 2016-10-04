@@ -8,6 +8,8 @@ class ContactCard extends Component {
     constructor(props) {
         super(props);
 
+        // this.props.getUserInfo(this.props.params.id);
+
         this.state = {
             first_name: props.user.first_name,
             last_name: props.user.last_name,
@@ -22,9 +24,9 @@ class ContactCard extends Component {
         this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
-    // componentWillMount(){
-    //     this.props.getUserInfo();
-    // }
+    componentWillMount(){
+        this.props.getUserInfo(this.props.params.id);
+    }
 
     onFirstNameChange(event){
         console.log(event.target.value);
@@ -46,7 +48,7 @@ class ContactCard extends Component {
     onFormSubmit(event){
         event.preventDefault();
         // update user info
-        this.props.updateUser({
+        this.props.updateUser(this.props.params.id,{
             email: this.state.email,
             first_name: this.state.first_name,
             last_name: this.state.last_name,
@@ -68,23 +70,19 @@ class ContactCard extends Component {
             <div className="row col-md-6 col-xs-12">
               <fieldset className="form-group col-sm-12">
                 <label>First Name:</label>
-                <input value={this.state.first_name} onChange={this.onFirstNameChange} className="form-control"/>
+                <input value={this.state.first_name || this.props.user.first_name} onChange={this.onFirstNameChange} className="form-control"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
                 <label>Last Name:</label>
-                <input value={this.state.last_name} onChange={this.onLastNameChange} className="form-control"/>
+                <input value={this.state.last_name || this.props.user.last_name} onChange={this.onLastNameChange} className="form-control"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
                 <label>Email:</label>
-                <input value={this.state.email} onChange={this.onEmailChange} className="form-control" />
+                <input value={this.state.email || this.props.user.email} onChange={this.onEmailChange} className="form-control" />
               </fieldset>
-              {/*<fieldset className="form-group col-sm-6">
-                <label>Password:</label>
-                <input {...password} type="password" className="form-control" />
-              </fieldset>*/}
               <fieldset className="form-group col-sm-12">
                 <label>Profile Picture (url):</label>
-                <input value={this.state.photo_url} onChange={this.onPhotoUrlChange} className="form-control"/>
+                <input value={this.state.photo_url || this.props.user.photo_url} onChange={this.onPhotoUrlChange} className="form-control"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
                   <ul className="contact-card-button-group">
