@@ -2,7 +2,8 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, USER_INFO, UPDATE_USER, DELETE_USER } from './types';
 
-const ROOT_URL = 'http://localhost:3000';
+// const ROOT_URL = 'http://localhost:3000';
+const ROOT_URL = 'http://contact-card-api-garan.herokuapp.com';
 
 
 export function loginUser({ email, password }) {
