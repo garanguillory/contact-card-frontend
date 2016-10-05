@@ -13,7 +13,7 @@ export function loginUser({ email, password }) {
       .then(response => {
         console.log("login response: ", response);
         dispatch({ type: AUTH_USER});
-        // dispatch({ type: USER_INFO, payload: response.data });
+        dispatch({ type: USER_INFO, payload: response.data });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('email', response.data.email);
           browserHistory.push(`/contactcard/${response.data.id}`);
@@ -29,10 +29,11 @@ export function signupUser({ email, password }) {
   return function(dispatch) {
     axios.post(`${ROOT_URL}/signup`, { email, password })
       .then(response => {
+        console.log("signup response: ", response);
         dispatch({ type: AUTH_USER });
         dispatch({ type: USER_INFO, payload: response.data });
         localStorage.setItem('token', response.data.token);
-        browserHistory.push('/contactcard');
+        browserHistory.push(`/contactcard/${response.data.id}`);
       })
       .catch(response => dispatch(authError(response.data.error)));
   }

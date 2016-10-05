@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Field, reduxForm} from 'redux-form';
 import * as actions from '../../actions';
 
 class Login extends Component {
@@ -18,19 +19,19 @@ class Login extends Component {
   }
 
   render() {
-    const { handleSubmit, fields: { email, password }} = this.props;
+    const {handleSubmit} = this.props;
     
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <div className="container">
           <div className="row col-sm-6">
             <fieldset className="form-group">
-              <label>Email:</label>
-              <input {...email} className="form-control" />
+              <label htmlFor="email">Email</label>
+              <Field name="email" className="form-control" component="input" type="email"/>
             </fieldset>
             <fieldset className="form-group">
-              <label>Password:</label>
-              <input {...password} type="password" className="form-control" />
+              <label htmlFor="password">Password</label>
+              <Field name="password" className="form-control" component="input" type="password"/>
             </fieldset>
             {this.renderAlert()}
             <button action="submit" className="btn btn-primary">Log in</button>
@@ -41,11 +42,27 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
-}
+// function mapStateToProps(state) {
+//   return { errorMessage: state.auth.error };
+// }
 
-export default reduxForm({
-  form: 'login',
-  fields: ['email', 'password']
-}, mapStateToProps, actions)(Login);
+// export default reduxForm({
+//   form: 'login',
+// }, mapStateToProps, actions)(Login);
+
+Login = reduxForm({
+  form: 'login'
+})(Login);
+
+Login = connect(
+  state => ({
+    errorMessage: state.auth.error
+  }), actions)(Login)
+
+export default Login
+
+
+
+
+
+

@@ -1,88 +1,70 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Field, reduxForm} from 'redux-form';
 import * as actions from '../actions';
 
 class ContactCard extends Component {
 
-    constructor(props) {
-        super(props);
-
-        // this.props.getUserInfo(this.props.params.id);
-
-        this.state = {
-            first_name: props.user.first_name,
-            last_name: props.user.last_name,
-            email: props.user.email,
-            photo_url: props.user.photo_url
-        };
-        this.onFirstNameChange = this.onFirstNameChange.bind(this);
-        this.onLastNameChange = this.onLastNameChange.bind(this);
-        this.onEmailChange = this.onEmailChange.bind(this);
-        this.onPhotoUrlChange = this.onPhotoUrlChange.bind(this);
-        
-        this.onFormSubmit = this.onFormSubmit.bind(this);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     componentWillMount(){
         this.props.getUserInfo(this.props.params.id);
+        this.handleInitialize();
     }
 
-    onFirstNameChange(event){
-        console.log(event.target.value);
-        this.setState({first_name: event.target.value});
-    }
-    onLastNameChange(event){
-        console.log(event.target.value);
-        this.setState({last_name: event.target.value});
-    }
-    onEmailChange(event){
-        console.log(event.target.value);
-        this.setState({email: event.target.value});
-    }
-    onPhotoUrlChange(event){
-        console.log(event.target.value);
-        this.setState({photo_url: event.target.value});
+    // componentDidMount(){
+    //   this.props.getUserInfo(this.props.params.id);
+    //   this.handleInitialize();
+    // }
+
+    handleInitialize() {
+      const initData = {
+        "first_name": this.props.user.first_name,
+        "last_name": this.props.user.last_name,
+        "email": this.props.user.email,
+        "photo_url": this.props.user.photo_url
+      };
+
+      this.props.initialize(initData);
     }
 
-    onFormSubmit(event){
-        event.preventDefault();
-        // update user info
-        this.props.updateUser(this.props.params.id,{
-            email: this.state.email,
-            first_name: this.state.first_name,
-            last_name: this.state.last_name,
-            photo_url: this.state.photo_url
-        });
+    // edit parameters
+    handleFormSubmit(formProps) {
+      this.props.updateUser(this.props.params.id, formProps);
     }
 
 
   render() {
     console.log("this.props.user: ", this.props.user);
+    // console.log("initialValues: ", initialValues);
+    const {handleSubmit} = this.props;
+    // console.log("initialValues: ", this.props.initialValues);
 
     return (
-    	// <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <form className="contact-card-form" onSubmit={this.onFormSubmit}>
+    	<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        {/*<form className="contact-card-form" onSubmit={this.onFormSubmit}>*/}
           <div className="container">
             <div className="row col-md-6 col-xs-12">
               <img src={this.props.user.photo_url ? this.props.user.photo_url : 'http://placehold.it/400x400'} alt="profile picture" className="img-responsive col-sm-12"/>
             </div>
             <div className="row col-md-6 col-xs-12">
               <fieldset className="form-group col-sm-12">
-                <label>First Name:</label>
-                <input value={this.state.first_name || this.props.user.first_name} onChange={this.onFirstNameChange} className="form-control"/>
+                <label htmlFor="first_name">First Name</label>
+              <Field name="first_name" className="form-control" component="input" type="text"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
-                <label>Last Name:</label>
-                <input value={this.state.last_name || this.props.user.last_name} onChange={this.onLastNameChange} className="form-control"/>
+                  <label htmlFor="last_name">Last Name</label>
+                <Field name="last_name" className="form-control" component="input" type="text"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
-                <label>Email:</label>
-                <input value={this.state.email || this.props.user.email} onChange={this.onEmailChange} className="form-control" />
+                <label htmlFor="email">Email</label>
+              <Field name="email" className="form-control" component="input" type="email"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
-                <label>Profile Picture (url):</label>
-                <input value={this.state.photo_url || this.props.user.photo_url} onChange={this.onPhotoUrlChange} className="form-control"/>
+                <label htmlFor="photo_url">Profile Picture (url):</label>
+                <Field name="photo_url" className="form-control" component="input" type="text"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
                   <ul className="contact-card-button-group">
@@ -103,25 +85,27 @@ class ContactCard extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { user: state.user };
-}
+// function mapStateToProps(state) {
+//   return { user: state.user };
+// }
 
 // export default reduxForm({
 //   form: 'contactCard',
 //   fields: ['email', 'first_name', 'last_name', 'photo_url']
 // }, mapStateToProps, actions)(ContactCard);
 
-export default connect(mapStateToProps, actions)(ContactCard);
+// export default connect(mapStateToProps, actions)(ContactCard);
 
-/*
-<button
-  className="btn btn-danger"
-  onClick={() => this.props.deleteUser(this.props.user.email)}>
-  Delete
-</button>
-*/
+ContactCard = reduxForm({
+  form: 'contactcard'
+})(ContactCard)
 
+ContactCard = connect(
+  state => ({
+    user: state.user
+  }), actions)(ContactCard)
+
+export default ContactCard
 
 
 
