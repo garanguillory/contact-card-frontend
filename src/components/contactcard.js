@@ -5,19 +5,46 @@ import * as actions from '../actions';
 
 class ContactCard extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    // }
+    constructor(props) {
+        super(props);
 
-    componentWillMount(){
-        this.props.getUserInfo(this.props.params.id);
-        this.handleInitialize();
+        this.state = props.user;
+        // console.log("this.state: ", this.state);
+        // console.log("this.props.user: ", this.props.user);
     }
 
-    // componentDidMount(){
-    //   this.props.getUserInfo(this.props.params.id);
-    //   this.handleInitialize();
-    // }
+    componentWillMount(){
+      this.props.getUserInfo(this.props.params.id)
+          // .then(() => console.log("hello"));
+      //     .then(function(response){console.log(response)});
+
+      const initData = {
+          "first_name": this.props.user.first_name,
+          "last_name": this.props.user.last_name,
+          "email": this.props.user.email,
+          "photo_url": this.props.user.photo_url
+        };
+        console.log("initData: ", initData);
+      this.props.initialize(initData);
+
+      console.log("this.props.initialValues: ", this.props.initialValues);
+      console.log("this.props: ", this.props);
+      console.log("this.state: ", this.state);
+      // this.props.initialValues = {
+      //   "first_name": this.props.user.first_name,
+      //   "last_name": this.props.user.last_name,
+      //   "email": this.props.user.email,
+      //   "photo_url": this.props.user.photo_url
+      // };
+      // this.props.autofill(initData);
+      // this.props.dispatch(initialize('contactcard', initData));
+
+    }
+
+    componentDidMount(){
+      this.props.getUserInfo(this.props.params.id);
+      this.handleInitialize();
+    }
 
     handleInitialize() {
       const initData = {
@@ -37,10 +64,11 @@ class ContactCard extends Component {
 
 
   render() {
-    console.log("this.props.user: ", this.props.user);
-    // console.log("initialValues: ", initialValues);
+    // console.log("this.props: ", this.props);
+
+
     const {handleSubmit} = this.props;
-    // console.log("initialValues: ", this.props.initialValues);
+
 
     return (
     	<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -52,7 +80,7 @@ class ContactCard extends Component {
             <div className="row col-md-6 col-xs-12">
               <fieldset className="form-group col-sm-12">
                 <label htmlFor="first_name">First Name</label>
-              <Field name="first_name" className="form-control" component="input" type="text"/>
+              <Field name="first_name" className="form-control" component="input" value={this.props.user.first_name}type="text"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
                   <label htmlFor="last_name">Last Name</label>

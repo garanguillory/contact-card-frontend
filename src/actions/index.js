@@ -11,7 +11,7 @@ export function loginUser({ email, password }) {
 
     axios.post(`${ROOT_URL}/login`, { email, password })
       .then(response => {
-        console.log("login response: ", response);
+        // console.log("login response: ", response);
         dispatch({ type: AUTH_USER});
         dispatch({ type: USER_INFO, payload: response.data });
         localStorage.setItem('token', response.data.token);
@@ -76,12 +76,35 @@ export function getUserInfo(id) {
       .then(response => {
         console.log('getUserInfo response: ', response);
         dispatch({ type: USER_INFO, payload: response.data.userInfo });
-        // localStorage.setItem('token', response.data.token);
         browserHistory.push(`/contactcard/${id}`);
       })
       .catch(response => dispatch(authError(response.data.error)));
   }
 }
+
+// export function getUser(id){
+//   axios.get(`${ROOT_URL}/contactcard/${id}`, {headers: {authorization: localStorage.getItem('token')}})
+//     .then(response => {
+//       console.log('getUser response: ', response);
+//       return response;
+//       // dispatch({ type: USER_INFO, payload: response.data.userInfo });
+//       // browserHistory.push(`/contactcard/${id}`);
+//     })
+//     .catch(response => dispatch(authError(response.data.error)));
+// }
+
+// export function getUserInfo(id) {
+//   return function(dispatch) {
+//     axios.get(`${ROOT_URL}/contactcard/${id}`, {headers: {authorization: localStorage.getItem('token')}})
+//       .then(response => {
+//         console.log('getUserInfo response: ', response);
+//         // browserHistory.push(`/contactcard/${id}`);
+//         dispatch({ type: USER_INFO, payload: response.data.userInfo });
+//         browserHistory.push(`/contactcard/${id}`);
+//       })
+//       .catch(response => dispatch(authError(response.data.error)));
+//   }
+// }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
