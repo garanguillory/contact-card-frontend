@@ -16,19 +16,19 @@ class ContactCard extends Component {
 
     componentWillMount(){
       this.props.getUserInfo(this.props.params.id);
-      console.log("this.props.destroy: ", this.props.destroy);
+      // console.log("this.props.destroy: ", this.props.destroy);
 
-      const initData = {
-          "first_name": this.props.user.first_name,
-          "last_name": this.props.user.last_name,
-          "email": this.props.user.email,
-          "photo_url": this.props.user.photo_url
-        };
-        console.log("initData: ", initData);
-        // debugger;
-      this.props.initialize(initData);
+      // const initData = {
+      //     "first_name": this.props.user.first_name,
+      //     "last_name": this.props.user.last_name,
+      //     "email": this.props.user.email,
+      //     "photo_url": this.props.user.photo_url
+      //   };
+      //   console.log("initData: ", initData);
+      //   // debugger;
+      // this.props.initialize(initData);
 
-      console.log("this.props.dispatch: ", this.props.dispatch);
+      // console.log("this.props.dispatch: ", this.props.dispatch);
 
     }
 
@@ -68,12 +68,13 @@ class ContactCard extends Component {
         {/*<form className="contact-card-form" onSubmit={this.onFormSubmit}>*/}
           <div className="container">
             <div className="row col-md-6 col-xs-12">
-              <img src={this.props.user.photo_url ? this.props.user.photo_url : 'http://placehold.it/400x400'} alt="profile picture" className="img-responsive col-sm-12"/>
+              <img src={this.props.initialValues.photo_url ? this.props.initialValues.photo_url : 'http://placehold.it/400x400'} alt="profile picture" className="img-responsive col-sm-12"/>
+              {/*<img src='http://placehold.it/400x400' alt="profile picture" className="img-responsive col-sm-12"/>*/}
             </div>
             <div className="row col-md-6 col-xs-12">
               <fieldset className="form-group col-sm-12">
                 <label htmlFor="first_name">First Name</label>
-              <Field name="first_name" className="form-control" component="input" value={this.props.user.first_name}type="text"/>
+              <Field name="first_name" className="form-control" component="input" type="text"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
                   <label htmlFor="last_name">Last Name</label>
@@ -125,7 +126,7 @@ ContactCard = reduxForm({
 
 ContactCard = connect(
   state => ({
-    user: state.user
+    initialValues: {"first_name": state.user.first_name, "last_name": state.user.last_name, "email": state.user.email, "photo_url": state.user.photo_url}
   }), actions)(ContactCard)
 
 export default ContactCard
