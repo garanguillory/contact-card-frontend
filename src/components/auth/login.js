@@ -42,14 +42,6 @@ class Login extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return { errorMessage: state.auth.error };
-// }
-
-// export default reduxForm({
-//   form: 'login',
-// }, mapStateToProps, actions)(Login);
-
 Login = reduxForm({
   form: 'login'
 })(Login);

@@ -5,7 +5,6 @@ import { AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, USER_INFO, UPDATE_US
 const ROOT_URL = 'http://localhost:3000';
 // const ROOT_URL = 'http://contact-card-api-garan.herokuapp.com';
 
-
 export function loginUser({ email, password }) {
   return function(dispatch) {
 
@@ -21,9 +20,8 @@ export function loginUser({ email, password }) {
       .catch(() => {
         dispatch(authError('Wrong Login Info'));
       });
-  }; // end of dispatching function
+  };
 }
-
 
 export function signupUser({ email, password }) {
   return function(dispatch) {
@@ -39,10 +37,9 @@ export function signupUser({ email, password }) {
   }
 }
 
-
-export function updateUser(id, {email, first_name, last_name, photo_url}) {
+export function updateUser(id, {email, first_name, last_name, description, photo_url}) {
   return function(dispatch) {
-    axios.put(`${ROOT_URL}/contactcard/${id}`, {email, first_name, last_name, photo_url})
+    axios.put(`${ROOT_URL}/contactcard/${id}`, {email, first_name, last_name, description, photo_url})
       .then(response => {
         dispatch({ type: UPDATE_USER, payload: response.data.userInfo });
         // localStorage.setItem('token', response.data.token);
@@ -52,6 +49,7 @@ export function updateUser(id, {email, first_name, last_name, photo_url}) {
   }
 }
 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // delete user
 export function deleteUser({email}) {
   return function(dispatch) {
@@ -68,45 +66,17 @@ export function deleteUser({email}) {
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-// {headers: {authorization: localStorage.getItem('token')}}
-
 export function getUserInfo(id) {
   return function(dispatch) {
     axios.get(`${ROOT_URL}/contactcard/${id}`, {headers: {authorization: localStorage.getItem('token')}})
       .then(response => {
-        // console.log('getUserInfo response: ', response);
+        console.log('getUserInfo response: ', response);
         dispatch({ type: USER_INFO, payload: response.data.userInfo });
         browserHistory.push(`/contactcard/${id}`);
       })
       .catch(response => dispatch(authError(response.data.error)));
   }
 }
-
-// export function getUser(id){
-//   axios.get(`${ROOT_URL}/contactcard/${id}`, {headers: {authorization: localStorage.getItem('token')}})
-//     .then(response => {
-//       console.log('getUser response: ', response);
-//       return response;
-//       // dispatch({ type: USER_INFO, payload: response.data.userInfo });
-//       // browserHistory.push(`/contactcard/${id}`);
-//     })
-//     .catch(response => dispatch(authError(response.data.error)));
-// }
-
-// export function getUserInfo(id) {
-//   return function(dispatch) {
-//     axios.get(`${ROOT_URL}/contactcard/${id}`, {headers: {authorization: localStorage.getItem('token')}})
-//       .then(response => {
-//         console.log('getUserInfo response: ', response);
-//         // browserHistory.push(`/contactcard/${id}`);
-//         dispatch({ type: USER_INFO, payload: response.data.userInfo });
-//         browserHistory.push(`/contactcard/${id}`);
-//       })
-//       .catch(response => dispatch(authError(response.data.error)));
-//   }
-// }
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 export function authError(error) {
   return {

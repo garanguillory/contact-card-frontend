@@ -41,7 +41,11 @@ class ContactCard extends Component {
               <Field name="email" className="form-control" component="input" type="email"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
-                <label htmlFor="photo_url">Profile Picture (url):</label>
+                <label htmlFor="description">Description</label>
+                <Field name="description" className="form-control" component="textarea"/>
+              </fieldset>
+              <fieldset className="form-group col-sm-12">
+                <label htmlFor="photo_url">Profile Picture (url)</label>
                 <Field name="photo_url" className="form-control" component="input" type="text"/>
               </fieldset>
               <fieldset className="form-group col-sm-12">
@@ -72,7 +76,7 @@ ContactCard = reduxForm({
 
 ContactCard = connect(
   state => ({
-    initialValues: {"first_name": state.user.first_name, "last_name": state.user.last_name, "email": state.user.email, "photo_url": state.user.photo_url}
+    initialValues: {"first_name": state.user.first_name, "last_name": state.user.last_name, "email": state.user.email, "description": state.user.description, "photo_url": state.user.photo_url}
   }), actions)(ContactCard)
 
 export default ContactCard
