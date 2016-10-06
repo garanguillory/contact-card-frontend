@@ -9,14 +9,12 @@ class ContactCard extends Component {
         super(props);
 
         this.state = props.user;
-        // console.log("this.state: ", this.state);
-        // console.log("this.props.user: ", this.props.user);
+        console.log("this.state: ", this.state);
+        console.log("this.props.user: ", this.props.user);
     }
 
     componentWillMount(){
-      this.props.getUserInfo(this.props.params.id)
-          // .then(() => console.log("hello"));
-      //     .then(function(response){console.log(response)});
+      this.props.getUserInfo(this.props.params.id);
 
       const initData = {
           "first_name": this.props.user.first_name,
@@ -25,28 +23,19 @@ class ContactCard extends Component {
           "photo_url": this.props.user.photo_url
         };
         console.log("initData: ", initData);
+        debugger;
       this.props.initialize(initData);
-
-      console.log("this.props.initialValues: ", this.props.initialValues);
-      console.log("this.props: ", this.props);
-      console.log("this.state: ", this.state);
-      // this.props.initialValues = {
-      //   "first_name": this.props.user.first_name,
-      //   "last_name": this.props.user.last_name,
-      //   "email": this.props.user.email,
-      //   "photo_url": this.props.user.photo_url
-      // };
-      // this.props.autofill(initData);
-      // this.props.dispatch(initialize('contactcard', initData));
 
     }
 
     componentDidMount(){
       this.props.getUserInfo(this.props.params.id);
+      debugger
       this.handleInitialize();
     }
 
     handleInitialize() {
+      debugger
       const initData = {
         "first_name": this.props.user.first_name,
         "last_name": this.props.user.last_name,
@@ -64,12 +53,12 @@ class ContactCard extends Component {
 
 
   render() {
-    // console.log("this.props: ", this.props);
+    console.log("this.props: ", this.props);
 
 
     const {handleSubmit} = this.props;
 
-
+debugger;
     return (
     	<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         {/*<form className="contact-card-form" onSubmit={this.onFormSubmit}>*/}
@@ -125,7 +114,8 @@ class ContactCard extends Component {
 // export default connect(mapStateToProps, actions)(ContactCard);
 
 ContactCard = reduxForm({
-  form: 'contactcard'
+  form: 'contactcard',
+  enableReinitialize: true
 })(ContactCard)
 
 ContactCard = connect(
