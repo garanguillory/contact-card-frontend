@@ -74,7 +74,7 @@ export function getUserInfo(id) {
   return function(dispatch) {
     axios.get(`${ROOT_URL}/contactcard/${id}`, {headers: {authorization: localStorage.getItem('token')}})
       .then(response => {
-        console.log('getUserInfo response: ', response);
+        // console.log('getUserInfo response: ', response);
         dispatch({ type: USER_INFO, payload: response.data.userInfo });
         browserHistory.push(`/contactcard/${id}`);
       })

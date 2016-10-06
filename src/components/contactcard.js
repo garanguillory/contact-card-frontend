@@ -8,13 +8,15 @@ class ContactCard extends Component {
     constructor(props) {
         super(props);
 
-        this.state = props.user;
+        // this.state = props.user;
         console.log("this.state: ", this.state);
-        console.log("this.props.user: ", this.props.user);
+        console.log("this.props: ", this.props);
+        // console.log("this.props.destroyOnUnmount: ", this.props.destroyOnUnmount);
     }
 
     componentWillMount(){
       this.props.getUserInfo(this.props.params.id);
+      console.log("this.props.destroy: ", this.props.destroy);
 
       const initData = {
           "first_name": this.props.user.first_name,
@@ -23,28 +25,30 @@ class ContactCard extends Component {
           "photo_url": this.props.user.photo_url
         };
         console.log("initData: ", initData);
-        debugger;
+        // debugger;
       this.props.initialize(initData);
 
+      console.log("this.props.dispatch: ", this.props.dispatch);
+
     }
 
-    componentDidMount(){
-      this.props.getUserInfo(this.props.params.id);
-      debugger
-      this.handleInitialize();
-    }
+    // componentDidMount(){
+    //   this.props.getUserInfo(this.props.params.id);
+    //   // debugger
+    //   this.handleInitialize();
+    // }
 
-    handleInitialize() {
-      debugger
-      const initData = {
-        "first_name": this.props.user.first_name,
-        "last_name": this.props.user.last_name,
-        "email": this.props.user.email,
-        "photo_url": this.props.user.photo_url
-      };
+    // handleInitialize() {
+    //   // debugger
+    //   const initData = {
+    //     "first_name": this.props.user.first_name,
+    //     "last_name": this.props.user.last_name,
+    //     "email": this.props.user.email,
+    //     "photo_url": this.props.user.photo_url
+    //   };
 
-      this.props.initialize(initData);
-    }
+    //   this.props.initialize(initData);
+    // }
 
     // edit parameters
     handleFormSubmit(formProps) {
@@ -53,12 +57,12 @@ class ContactCard extends Component {
 
 
   render() {
-    console.log("this.props: ", this.props);
+    // console.log("this.props: ", this.props);
 
 
     const {handleSubmit} = this.props;
 
-debugger;
+// debugger;
     return (
     	<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         {/*<form className="contact-card-form" onSubmit={this.onFormSubmit}>*/}
@@ -115,6 +119,7 @@ debugger;
 
 ContactCard = reduxForm({
   form: 'contactcard',
+  destroyOnUnmount: false,
   enableReinitialize: true
 })(ContactCard)
 
