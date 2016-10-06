@@ -54,9 +54,12 @@ class ContactCard extends Component {
                       <button action="submit" className="btn btn-primary">Update</button>
                     </li>
                     <li>
-                      <button onClick={() => this.props.deleteUser(this.props.params.id)} className="btn btn-danger">
-                        Delete
+                      <button className="btn btn-danger">
+                        Cancel
                       </button>
+                      {/*<button onClick={() => this.props.deleteUser(this.props.params.id)} className="btn btn-danger">
+                        Delete
+                      </button>*/}
                     </li>
                   </ul>
               </fieldset>
