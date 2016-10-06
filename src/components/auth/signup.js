@@ -3,6 +3,31 @@ import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import * as actions from '../../actions';
 
+const validate = values => {
+  const errors = {}
+  if (!values.username) {
+    errors.username = 'Required'
+  } else if (values.username.length > 15) {
+    errors.username = 'Must be 15 characters or less'
+  }
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'
+  }
+  return errors
+};
+
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type}/>
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+)
+
 class Signup extends Component {
   handleFormSubmit(formProps) {
     this.props.signupUser(formProps);
@@ -47,7 +72,8 @@ class Signup extends Component {
 }
 
 Signup = reduxForm({
-  form: 'signup'
+  form: 'signup',
+  validate
 })(Signup);
 
 Signup = connect(
