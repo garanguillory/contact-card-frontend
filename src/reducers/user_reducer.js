@@ -7,8 +7,7 @@ export default function(state = {}, action){
     case UPDATE_USER:
       return {...state, email: action.payload.email, first_name: action.payload.first_name, last_name: action.payload.last_name, description: action.payload.description, photo_url: action.payload.photo_url};
     case DELETE_USER:
-    	// return empty object ???
-    	return state
+    	return {}
   }
 
   return state;

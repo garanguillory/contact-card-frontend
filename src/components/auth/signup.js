@@ -19,7 +19,7 @@ class Signup extends Component {
   }
 
   render() {
-    const {handleSubmit} = this.props;
+    const {handleSubmit, pristine} = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -38,7 +38,7 @@ class Signup extends Component {
               <Field name="confirm_password" className="form-control" component="input" type="password"/>
             </fieldset>
             {this.renderAlert()}
-            <button action="submit" className="btn btn-primary">Sign Up</button>
+            <button action="submit" disabled={pristine} className="btn btn-primary">Sign Up</button>
           </div>
         </div>
       </form>

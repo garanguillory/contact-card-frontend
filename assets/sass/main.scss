@@ -3,6 +3,13 @@ ul {
 	text-decoration: none;
 }
 
+a {
+	color: black;
+	&:hover{
+		color: lighten(black, 5%);
+	}
+}
+
 .error {
 	color: red;
 }

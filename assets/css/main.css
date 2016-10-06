@@ -2,6 +2,11 @@ ul {
   padding-left: 0px;
   text-decoration: none; }
 
+a {
+  color: black; }
+  a:hover {
+    color: #0d0d0d; }
+
 .error {
   color: red; }
 

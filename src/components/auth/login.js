@@ -4,12 +4,12 @@ import {Field, reduxForm} from 'redux-form';
 import * as actions from '../../actions';
 
 class Login extends Component {
-  handleFormSubmit({ email, password }) {
-    this.props.loginUser({ email, password });
+  handleFormSubmit({email, password}){
+    this.props.loginUser({email, password});
   }
 
-  renderAlert() {
-    if (this.props.errorMessage) {
+  renderAlert(){
+    if (this.props.errorMessage){
       return (
         <div className="alert alert-danger">
           <strong>Oops!</strong> {this.props.errorMessage}
@@ -18,8 +18,8 @@ class Login extends Component {
     }
   }
 
-  render() {
-    const {handleSubmit} = this.props;
+  render(){
+    const {handleSubmit, pristine} = this.props;
     
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -34,7 +34,7 @@ class Login extends Component {
               <Field name="password" className="form-control" component="input" type="password"/>
             </fieldset>
             {this.renderAlert()}
-            <button action="submit" className="btn btn-primary">Log in</button>
+            <button action="submit" disabled={pristine} className="btn btn-primary">Log in</button>
           </div>
         </div>
       </form>

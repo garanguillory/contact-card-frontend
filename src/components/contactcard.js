@@ -5,20 +5,20 @@ import * as actions from '../actions';
 
 class ContactCard extends Component {
 
-  constructor(props) {
-      super(props);
+  constructor(props){
+    super(props);
   }
 
   componentWillMount(){
     this.props.getUserInfo(this.props.params.id);
   }
 
-  handleFormSubmit(formProps) {
+  handleFormSubmit(formProps){
     this.props.updateUser(this.props.params.id, formProps);
   }
 
 
-  render() {
+  render(){
     const {handleSubmit} = this.props;
 
     return (
@@ -54,7 +54,7 @@ class ContactCard extends Component {
                       <button action="submit" className="btn btn-primary">Update</button>
                     </li>
                     <li>
-                      <button className="btn btn-danger">
+                      <button onClick={() => this.props.deleteUser(this.props.params.id)} className="btn btn-danger">
                         Delete
                       </button>
                     </li>
