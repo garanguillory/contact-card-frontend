@@ -19,7 +19,7 @@ class ContactCard extends Component {
 
 
   render(){
-    const {handleSubmit} = this.props;
+    const {handleSubmit, reset} = this.props;
 
     return (
     	<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -54,7 +54,7 @@ class ContactCard extends Component {
                       <button action="submit" className="btn btn-primary">Update</button>
                     </li>
                     <li>
-                      <button className="btn btn-danger">
+                      <button onClick={reset}  className="btn btn-danger">
                         Cancel
                       </button>
                       {/*<button onClick={() => this.props.deleteUser(this.props.params.id)} className="btn btn-danger">
