@@ -2,6 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import * as actions from '../../actions';
+import validate from '../validate'
+
+
+const renderField = ({input, label, type, meta: {touched, error}}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} className="form-control" placeholder={label} type={type}/>
+      {touched && error && <div className="error">{error}</div>}
+    </div>
+  </div>
+)
 
 class Login extends Component {
   handleFormSubmit({email, password}){
@@ -11,7 +23,7 @@ class Login extends Component {
   renderAlert(){
     if (this.props.errorMessage){
       return (
-        <div className="alert alert-danger">
+        <div className="error">
           <strong>Oops!</strong> {this.props.errorMessage}
         </div>
       );
@@ -26,14 +38,12 @@ class Login extends Component {
         <div className="container">
           <div className="row col-sm-6">
             <fieldset className="form-group">
-              <label htmlFor="email">Email</label>
-              <Field name="email" className="form-control" component="input" type="email"/>
+              <Field name="email" type="email" component={renderField} label="Email" />
             </fieldset>
             <fieldset className="form-group">
-              <label htmlFor="password">Password</label>
-              <Field name="password" className="form-control" component="input" type="password"/>
+              <Field name="password" type="password" component={renderField} label="Password" />
+              {this.renderAlert()}
             </fieldset>
-            {this.renderAlert()}
             <button action="submit" disabled={pristine} className="btn btn-primary">Log in</button>
           </div>
         </div>
@@ -43,7 +53,8 @@ class Login extends Component {
 }
 
 Login = reduxForm({
-  form: 'login'
+  form: 'login',
+  validate
 })(Login);
 
 Login = connect(
