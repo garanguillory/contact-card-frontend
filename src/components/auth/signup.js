@@ -18,12 +18,12 @@ const validate = values => {
   return errors
 };
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
+const renderField = ({input, label, type, meta: {touched, error}}) => (
   <div>
     <label>{label}</label>
     <div>
-      <input {...input} placeholder={label} type={type}/>
-      {touched && error && <span>{error}</span>}
+      <input {...input} className="form-control" placeholder={label} type={type}/>
+      {touched && error && <span className="error">{error}</span>}
     </div>
   </div>
 )
@@ -51,18 +51,16 @@ class Signup extends Component {
         <div className="container">
           <div className="row col-sm-6">
             <fieldset className="form-group">
-              <label htmlFor="email">Email</label>
-              <Field name="email" className="form-control" component="input" type="email"/>
+              <Field name="email" type="email" component={renderField} label="Email" />
             </fieldset>
             <fieldset className="form-group">
-              <label htmlFor="password">Password</label>
-              <Field name="password" className="form-control" component="input" type="password"/>
+              <Field name="password" type="password" component={renderField} label="Password" />
             </fieldset>
-            <fieldset className="form-group">
+            {/*<fieldset className="form-group">
               <label htmlFor="confirm_password">Confirm Password</label>
               <Field name="confirm_password" className="form-control" component="input" type="password"/>
-            </fieldset>
-            {this.renderAlert()}
+            </fieldset>*/}
+            {/*this.renderAlert()*/}
             <button action="submit" disabled={pristine} className="btn btn-primary">Sign Up</button>
           </div>
         </div>
